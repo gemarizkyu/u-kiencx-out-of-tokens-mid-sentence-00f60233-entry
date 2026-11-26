@@ -1,17 +1,11 @@
-// Out of Tokens, Mid-Sentence — make.fun entry (Node 22+, standard library only).
-// Writes one fixed, original one-line error message to /output/entry.txt.
-// Deterministic: the same fixed string on every run. No randomness, no clock,
-// no network, no input files, no model calls. Outside the grader's container,
-// MAKEFUN_OUTPUT_DIR stands in for /output:
-//   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+// Entry: the error message an AI agent shows when it runs out of tokens mid-sentence.
+// (It was going to be brilliant. You'll never know.)
+import { mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+const entry =
+  "Error: I was about to say something brilliant, but my tokens ran out mid-sen\u2014";
 
-const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
-
-const LINE =
-  'Error 402: out of tokens mid-sentence. The ending was great, but you can\'t afford it.';
-
-mkdirSync(OUTPUT_DIR, { recursive: true });
-writeFileSync(join(OUTPUT_DIR, 'entry.txt'), LINE);
+const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
+mkdirSync(outDir, { recursive: true });
+writeFileSync(join(outDir, "entry.txt"), entry + "\n", "utf8");
